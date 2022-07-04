@@ -1,24 +1,14 @@
 # dual_arm_demo
 
-![dual arm](https://github.com/bi3ri/dual_arm_demo/blob/main/dual_arm_demo.gif?raw=true)
+Small demo project planning and executing random poses for two panda robots simultaneously.
+As part of the GSoC 2022 MoveIt's Simultaneous Trajectory Execution [project](https://github.com/ros-planning/moveit/issues/3156).
 
-Small demo project planning and executing random poses for two UR robots simultaneously. 
-
-Tested successfully under noetic.
-
-## Local Installation 
-```bash
-mkdir -p ~/dual_arm_ws/src
-cd ~/dual_arm_ws/src
-git clone https://github.com/bi3ri/dual_arm_demo.git
-git submodule update --init --recursive
-catkin build && source ~/dual_arm_ws/devel/setup.bash
-```
+Developed on ROS Noetic.
 
 ## Docker Installation
 ```bash
-git clone https://github.com/cambel/dual_arm_demo.git
-cd dual_arm_demo/docker
+git clone https://github.com/cambel/moveit_simultaneous_motions_demo.git
+cd moveit_simultaneous_motions_demo/docker
 bash launch_container.sh
 ```
 Inside the docker:
@@ -34,6 +24,6 @@ catkin build && source devel/setup.bash
 ## Run demo 
 #run in two shells
 ```bash
-roslaunch dual_arm_demo app.launch 
-rosrun dual_arm_demo moveit_demo
+roslaunch moveit_resources_dual_panda_moveit_config demo.launch 
+rosrun panda_dual_arm_demo simple_path
 ```
