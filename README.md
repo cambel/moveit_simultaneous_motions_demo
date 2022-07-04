@@ -1,4 +1,4 @@
-# dual_arm_demo
+# Simultaneous Trajectory Execution example environment (panda dual-arm)
 
 Small demo project planning and executing random poses for two panda robots simultaneously.
 As part of the GSoC 2022 MoveIt's Simultaneous Trajectory Execution [project](https://github.com/ros-planning/moveit/issues/3156).
