@@ -31,8 +31,8 @@ int main(int argc, char** argv) {
   geometry_msgs::PoseStamped panda_2_pose_goal;
   geometry_msgs::Pose panda_1_pose;
   geometry_msgs::Pose panda_2_pose;
-  panda_1_pose_goal.header.frame_id = "panda_1_link1";
-  panda_2_pose_goal.header.frame_id = "panda_2_link1";
+  panda_1_pose_goal.header.frame_id = "base";
+  panda_2_pose_goal.header.frame_id = "base";
 
   panda_1_pose.position.x = 0.450;
   panda_1_pose.position.y = -0.50;

@@ -1,0 +1,39 @@
+<launch>
+
+    <!-- Specify the config files to use -->
+    <rosparam ns="simple_path_moveitcpp" command="load" file="$(find panda_dual_arm_demo)/config/moveit_cpp.yaml" />
+    <rosparam ns="joint_state_publisher" command="load" file="$(find panda_dual_arm_demo)/config/joint_state_publisher.yaml" />
+
+    <!-- Planning Pipeline -->
+    <include ns="/simple_path_moveitcpp/ompl" file="$(find moveit_resources_dual_panda_moveit_config)/launch/ompl_planning_pipeline.launch.xml"/>
+
+     <!-- Trajectory execution  -->
+    <include ns="simple_path_moveitcpp" file="$(find moveit_resources_dual_panda_moveit_config)/launch/trajectory_execution.launch.xml">
+      <arg name="moveit_controller_manager" value="fake"/>
+    </include>
+
+    <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+    <include file="$(find moveit_resources_dual_panda_moveit_config)/launch/planning_context.launch">
+      <arg name="load_robot_description" value="true"/>
+    </include>
+
+    <!-- If needed, broadcast static tf for robot root -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="virtual_joint_broadcaster_1" args="0 0 0 0 0 0 world panda_link0" />
+
+    <!-- send fake joint values -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+      <rosparam param="source_list">["/simple_path_moveitcpp/fake_controller_joint_states"]</rosparam>
+    </node>
+
+    <!-- Start robot state publisher -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+    <!-- Launch RViz -->
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false"
+      args="-d $(find panda_dual_arm_demo)/launch/moveit_cpp.rviz" output="screen">
+      <rosparam command="load" file="$(find moveit_resources_dual_panda_moveit_config)/config/kinematics.yaml"/>
+    </node>
+
+    <include file="$(find panda_dual_arm_demo)/launch/moveit_cpp_node.launch"/>
+
+</launch>
