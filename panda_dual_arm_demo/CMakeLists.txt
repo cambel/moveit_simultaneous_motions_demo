@@ -125,8 +125,6 @@ include_directories(
 )
 
 ## Declare a C++ library
-add_executable(moveit_demo src/moveit_demo.cpp)
-add_executable(simple_path src/simple_path.cpp)
 add_executable(simple_path_move_group src/simple_path_move_group.cpp)
 add_executable(simple_path_moveitcpp src/simple_path_moveitcpp.cpp)
 
@@ -151,16 +149,6 @@ add_executable(simple_path_moveitcpp src/simple_path_moveitcpp.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(moveit_demo
-  ${catkin_LIBRARIES}
-  ${Boost_LIBRARIES}
-)
-
-target_link_libraries(simple_path
-  ${catkin_LIBRARIES}
-  ${Boost_LIBRARIES}
-)
-
 target_link_libraries(simple_path_move_group
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
@@ -194,7 +182,7 @@ target_link_libraries(simple_path_moveitcpp
 
 ## Mark libraries for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
-install(TARGETS moveit_demo simple_path simple_path_move_group simple_path_moveitcpp
+install(TARGETS simple_path_move_group simple_path_moveitcpp
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
