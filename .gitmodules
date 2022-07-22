@@ -1,0 +1,12 @@
+[submodule "moveit"]
+	path = moveit
+	url = https://github.com/cambel/moveit.git
+    branch = TEM
+[submodule "moveit_resources"]
+	path = moveit_resources
+	url = https://github.com/cambel/moveit_resources.git
+    branch = master
+[submodule "moveit_msgs"]
+	path = moveit_msgs
+	url = https://github.com/cambel/moveit_msgs.git
+    branch = add-group-name-tem
