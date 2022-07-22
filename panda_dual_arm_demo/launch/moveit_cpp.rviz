@@ -78,7 +78,7 @@ Visualization Manager:
       Enabled: true
       Move Group Namespace: ""
       Name: PlanningScene
-      Planning Scene Topic: /publish_planning_scene
+      Planning Scene Topic: /monitored_planning_scene
       Robot Description: robot_description
       Scene Geometry:
         Scene Alpha: 0.8999999761581421
@@ -252,7 +252,11 @@ Visualization Manager:
       Marker Topic: /rviz_visual_tools
       Name: MarkerArray
       Namespaces:
+        Path: true
+        Sphere: true
         Text: true
+        start_pose: true
+        target_pose: true
       Queue Size: 100
       Value: true
   Enabled: true
@@ -299,9 +303,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4153977036476135
+      Pitch: 0.42539769411087036
       Target Frame: <Fixed Frame>
-      Yaw: 0.5753997564315796
+      Yaw: 0.5153998136520386
     Saved: ~
 Window Geometry:
   Displays:

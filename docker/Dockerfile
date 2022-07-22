@@ -44,7 +44,7 @@ RUN git config --global --add safe.directory /root/ros_ws/src/moveit_resources
 
 RUN echo "\nsource /root/ros_ws/devel/setup.bash\n" >> /root/.bashrc
 
-RUN apt install -y catkin-lint
+RUN apt install -y catkin-lint ros-noetic-rqt ros-noetic-rqt-common-plugins 
 
 # Traceability.
 ARG DOCKERFILE_COMMIT_SHORT_SHA

@@ -1,3 +1,5 @@
 <launch>
-    <node pkg="panda_dual_arm_demo" type="simple_path_moveitcpp" name="simple_path_moveitcpp" output="screen"/>
+    <node pkg="panda_dual_arm_demo" type="simple_path_moveitcpp" 
+          name="simple_path_moveitcpp" output="screen" 
+          />
 </launch>
