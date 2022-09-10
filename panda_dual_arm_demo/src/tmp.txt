@@ -1,0 +1,14 @@
+  // geometry_msgs::PoseStamped ROS message type as follow
+  // std::vector<double> p1pose1{0.450, -0.50,    1.50,       0.993436,
+  //                             3.5161e-05, 0.114386, 2.77577e-05};
+  // geometry_msgs::PoseStamped panda_1_target_pose1 =
+  //     createTargetPose("base", p1pose1);
+  // geometry_msgs::PoseStamped panda_1_visual_pose& = panda_1_target_pose1.pose;
+  // panda_1_planning_components->setGoal(panda_1_target_pose1,
+  // "panda_1_link8");
+
+
+    panda_2_planning_components->setStartStateToCurrentState();
+  std::vector<double> p2pose1{0.450, 0.40, 1.60, 0.993436, -7.54803e-06, 0.114403, 3.67256e-05};
+  geometry_msgs::PoseStamped panda_2_target_pose1 = createTargetPose("base", p2pose1);
+  panda_2_planning_components->setGoal(panda_2_target_pose1, "panda_2_link8");
