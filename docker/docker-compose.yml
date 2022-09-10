@@ -36,6 +36,7 @@ services:
       - ../moveit:/root/ros_ws/src/moveit
       - ../moveit_msgs:/root/ros_ws/src/moveit_msgs
       - ../moveit_resources:/root/ros_ws/src/moveit_resources
+      - ../moveit_tutorials:/root/ros_ws/src/moveit_tutorials
       # Grant display access to X Server.
       - /tmp/.X11-unix:/tmp/.X11-unix
     network_mode: host
