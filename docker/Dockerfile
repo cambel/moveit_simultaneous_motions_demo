@@ -33,7 +33,10 @@ RUN /bin/bash -c "source /opt/ros/noetic/setup.bash \
                && rosdep install -y --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} \
                && catkin config --extend /opt/ros/${ROS_DISTRO} --cmake-args -DCMAKE_BUILD_TYPE=Release"
 
-RUN apt install -y ros-noetic-tf-conversions
+RUN apt install -y ros-noetic-tf-conversions ccache
+
+RUN /bin/bash -c "echo 'export PATH=/usr/lib/ccache:$PATH' >> $HOME/.bashrc \
+                 && source $HOME/.bashrc "
 
 RUN /bin/bash -c "source /opt/ros/noetic/setup.bash \
                && cd ~/ros_ws \
