@@ -8,6 +8,7 @@ Developed on ROS Noetic.
 ## Docker Installation
 ```bash
 git clone https://github.com/cambel/moveit_simultaneous_motions_demo.git
+git submodule update --init --recursive
 cd moveit_simultaneous_motions_demo/docker
 bash launch_container.sh
 ```
