@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from copy import copy, deepcopy
+from copy import deepcopy
 import threading
 import numpy as np
 import rospy
@@ -12,7 +12,13 @@ import geometry_msgs.msg
 from math import pi, sqrt, tau, dist, fabs, cos
 
 
-def get_trajectory_joint_goal(plan):
+def get_trajectory_joint_goal(plan, joints_order=None):
+    if joints_order is not None:
+        joint_values = []
+        for joint in joints_order:
+            i = plan.joint_trajectory.joint_names.index(joint)
+            joint_values.append(plan.joint_trajectory.points[-1].positions[i])
+        return 
     return plan.joint_trajectory.points[-1].positions
 
 
@@ -54,10 +60,17 @@ class Arm:
 
         group.set_end_effector_link(self.end_effector)
 
-        # TODO add custom initial pose
         group.set_start_state_to_current_state()
         group.set_pose_target(pose_stamped)
         success, plan, planning_time, error = group.plan()
+        if not success:
+            return False
+        return self.execute_plan(plan, wait=wait)
+    
+    def move_joints(self, target_joint_values, wait=True):
+        self.group.set_start_state_to_current_state()
+        self.group.set_joint_value_target(target_joint_values)
+        success, plan, planning_time, error = self.group.plan()
         if not success:
             return False
         return self.execute_plan(plan, wait=wait)
@@ -80,24 +93,34 @@ def main():
     panda1 = Arm("panda_1", "panda_1_hand")
     panda2 = Arm("panda_2", "panda_2_hand")
 
+    # print(np.round(panda2.group.get_current_joint_values(),3).tolist())
+
+    # panda1.move_joints([1.057, -0.323, 0.805, -2.857, 0.424, 2.557, 1.468], False)
+    # panda2.move_joints([1.986, -0.416, 2.567, -2.089, 0.344, 2.414, -1.922])
+
     # make one robot move continuously in a certain way, like circles
     def move_panda1():
         p1_pose1 = panda1.group.get_current_pose()
 
         p1_pose2 = deepcopy(p1_pose1)
-        p1_pose2.pose.position.x -= 0.1
+        p1_pose2.pose.position.y -= 0.15
 
         p1_pose3 = deepcopy(p1_pose2)
-        p1_pose3.pose.position.z -= 0.1
+        p1_pose3.pose.position.z -= 0.15
 
         p1_pose4 = deepcopy(p1_pose3)
-        p1_pose4.pose.position.x += 0.1
+        p1_pose4.pose.position.y += 0.3
+
+        p1_pose5 = deepcopy(p1_pose1)
+        p1_pose5.pose.position.y += 0.15
 
         if not panda1.go_to_pose(p1_pose2):
             return
         if not panda1.go_to_pose(p1_pose3):
             return
         if not panda1.go_to_pose(p1_pose4):
+            return
+        if not panda1.go_to_pose(p1_pose5):
             return
         if not panda1.go_to_pose(p1_pose1):
             return
@@ -125,7 +148,7 @@ def main():
     # t2.start()
     t.join()
     # t2.join()
-    print("done")
+    # print("done")
     # make the other robot do some random stuff in the meantime
 
     # show that rviz can also be used in the mean time.

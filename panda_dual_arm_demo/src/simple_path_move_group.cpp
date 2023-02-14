@@ -7,6 +7,9 @@
 #include <moveit/moveit_cpp/moveit_cpp.h>
 #include <moveit/moveit_cpp/planning_component.h>
 #include <moveit/robot_state/conversions.h>
+#include <moveit_msgs/CollisionObject.h>
+#include <moveit/planning_scene_interface/planning_scene_interface.h>
+
 #include <stdlib.h>
 
 int main(int argc, char** argv) {
@@ -19,6 +22,8 @@ int main(int argc, char** argv) {
   moveit::planning_interface::MoveGroupInterface dual_arm_group("dual_arm");
   moveit::planning_interface::MoveGroupInterface panda_1_group("panda_1");
   moveit::planning_interface::MoveGroupInterface panda_2_group("panda_2");
+
+  moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
 
   dual_arm_group.setPlanningTime(0.5);
 
@@ -36,7 +41,7 @@ int main(int argc, char** argv) {
 
   panda_1_pose.position.x = 0.450;
   panda_1_pose.position.y = -0.50;
-  panda_1_pose.position.z = 1.600;
+  panda_1_pose.position.z = 1.200;
   panda_1_pose.orientation.x = 0.993436;
   panda_1_pose.orientation.y = 3.5161e-05;
   panda_1_pose.orientation.z = 0.114386;
@@ -44,7 +49,7 @@ int main(int argc, char** argv) {
 
   panda_2_pose.position.x = 0.450;
   panda_2_pose.position.y = 0.40;
-  panda_2_pose.position.z = 1.600;
+  panda_2_pose.position.z = 1.200;
   panda_2_pose.orientation.x = 0.993434;
   panda_2_pose.orientation.y = -7.54803e-06;
   panda_2_pose.orientation.z = 0.114403;
@@ -77,8 +82,32 @@ int main(int argc, char** argv) {
     ROS_INFO("Plan2 did not succeeded");
   }
 
+  moveit_msgs::CollisionObject collision_object;
+  collision_object.header.frame_id = panda_1_group.getPlanningFrame();
+  collision_object.id = "box1";
+  shape_msgs::SolidPrimitive primitive;
+  primitive.type = primitive.BOX;
+  primitive.dimensions.resize(3);
+  primitive.dimensions[primitive.BOX_X] = 0.1;
+  primitive.dimensions[primitive.BOX_Y] = 0.1;
+  primitive.dimensions[primitive.BOX_Z] = 0.1;
+  geometry_msgs::Pose box_pose;
+  box_pose.orientation.w = 1.0;
+  box_pose.position.x = 0.5;
+  box_pose.position.y = -0.6;
+  box_pose.position.z = 1.10;
+
+  collision_object.primitives.push_back(primitive);
+  collision_object.primitive_poses.push_back(box_pose);
+  collision_object.operation = collision_object.ADD;
+
+  std::vector<moveit_msgs::CollisionObject> collision_objects;
+  collision_objects.push_back(collision_object);
+
   panda_1_group.asyncExecute(my_plan_1);
   panda_2_group.asyncExecute(my_plan_2);
+  ros::Duration(2.5).sleep();
+  planning_scene_interface.addCollisionObjects(collision_objects);
 
   ros::shutdown();
 }

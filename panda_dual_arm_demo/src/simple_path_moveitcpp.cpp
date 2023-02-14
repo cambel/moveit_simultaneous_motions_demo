@@ -157,9 +157,9 @@ int main(int argc, char **argv) {
   if (p1_plan && p2_plan) {
     ROS_INFO_STREAM_NAMED(LOGNAME, "Visualizing plan 1.");
     // Panda 1
-    visualize(visual_tools, *panda_1_start_state, p1_target, "panda_1_link8", p1_plan.trajectory,
+    visualize(visual_tools, *panda_1_start_state, p1_target, "panda_1_link8", p1_plan.trajectory_,
               panda_1_joint_model_group_ptr);
-    visualize(visual_tools, *panda_2_start_state, p2_target, "panda_2_link8", p2_plan.trajectory,
+    visualize(visual_tools, *panda_2_start_state, p2_target, "panda_2_link8", p2_plan.trajectory_,
               panda_2_joint_model_group_ptr);
 
     visual_tools.trigger();
@@ -194,9 +194,9 @@ int main(int argc, char **argv) {
   if (p1_plan && p2_plan) {
     ROS_INFO_STREAM_NAMED(LOGNAME, "Visualizing plan 2.");
     // Panda 1
-    visualize(visual_tools, *panda_1_start_state, p1_target, "panda_1_link8", p1_plan.trajectory,
+    visualize(visual_tools, *panda_1_start_state, p1_target, "panda_1_link8", p1_plan.trajectory_,
               panda_1_joint_model_group_ptr);
-    visualize(visual_tools, *panda_2_start_state, p2_target, "panda_2_link8", p2_plan.trajectory,
+    visualize(visual_tools, *panda_2_start_state, p2_target, "panda_2_link8", p2_plan.trajectory_,
               panda_2_joint_model_group_ptr);
 
     visual_tools.trigger();
